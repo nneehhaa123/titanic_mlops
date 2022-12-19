@@ -1,7 +1,7 @@
 import requests
 import json
 
-test_sample = json.dumps({'data': [[3,'male',22,1,0,7.25,'S'],[1,'female',38,1,0,71.283,'C']]})
+test_sample = json.dumps({'data': [[3,22,2,1,7.25,0,1],[1,38,1,1,71.283,1,2]]})
 test_sample = str(test_sample)
 
 def test_ml_service(scoreurl, scorekey):

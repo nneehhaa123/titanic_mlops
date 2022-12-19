@@ -4,24 +4,28 @@ import joblib
 import time
 from azureml.core.model import Model
 import yaml
-
+import os
 # from inference_schema.schema_decorators \
 #     import input_schema, output_schema
 # from inference_schema.parameter_types.numpy_parameter_type \
 #     import NumpyParameterType
 
-params_path = "project_param.yaml"
+# params_path = "project_param.yaml"
 
-def read_params(config_path=params_path):
-    with open(config_path) as yaml_file:
-        config = yaml.safe_load(yaml_file)
-    return config
+# def read_params(config_path=params_path):
+#     with open(config_path) as yaml_file:
+#         config = yaml.safe_load(yaml_file)
+#     return config
 
 def init():
     global MODEL
     # Load the model from file into a global object
-    config = read_params(params_path)
-    model_path = Model.get_model_path(config['base']['model_name'])
+    # config = read_params(params_path)
+    # model_path = Model.get_model_path(config['base']['model_name'])
+    model_path = Model.get_model_path("titanic_model")
+    # model_path = os.path.join(
+    #     os.getenv("AZUREML_MODEL_DIR"), "titanic_model.pkl"
+    # )
     MODEL = joblib.load(model_path)
     # Print statement for appinsights custom traces:
     print("model initialized" + time.strftime("%H:%M:%S"))

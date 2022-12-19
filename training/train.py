@@ -3,7 +3,7 @@ import numpy as np
 from sklearn import metrics
 from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 import lightgbm
@@ -12,11 +12,11 @@ import lightgbm
 def data_transformation(data):
 
      # one hot encoding + standardization
-    encoder=OneHotEncoder(drop="first")
+    encoder=LabelEncoder()
     scaler=StandardScaler()
-    encoded_data=encoder.fit_transform(data[["Sex","Embarked"]]).toarray()
-    finaldata=np.hstack((data[["Pclass","Age","SibSp","Parch","Fare"]].values,encoded_data))
-    encoded_scaled_data=scaler.fit_transform(finaldata)
+    data['Sex']=encoder.fit_transform(data["Sex"])
+    data['Embarked']=encoder.fit_transform(data["Embarked"])
+    encoded_scaled_data=scaler.fit_transform(data)
     return encoded_scaled_data
 
 
